@@ -1,1 +1,1 @@
-set value 0.9
+set value 1.2
