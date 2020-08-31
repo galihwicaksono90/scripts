@@ -1,0 +1,5 @@
+#! /bin/bash
+
+mount=$(lsblk -n -i -o name | grep -v -e "sda" -e "sdb" | grep ".[0-9]" | sed 's/`-//g' | dmenu -i -p "Select to unmount: ")
+
+udisksctl unmount -b "/dev/$mount" && notify-send "/dev/$mount unmounted" || notify-send -u critical "Can't unmount $mount."

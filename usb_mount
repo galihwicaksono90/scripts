@@ -1,0 +1,5 @@
+#! /bin/bash
+
+mount=$(lsblk -n -i -o name | grep -v -e "sda" -e "sdb" | grep ".[0-9]" | sed 's/`-//g' | dmenu -i -p "Select to mount: ")
+
+udisksctl mount -b "/dev/$mount" && notify-send "/dev/$mount mounted" "/run/media/tony" || notify-send -u critical "Can't mount $mount"
