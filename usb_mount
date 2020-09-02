@@ -1,16 +1,10 @@
-#! /bin/bash
+#!/bin/sh
 
-drive_name=$(lsblk -n -i -o name,size | grep -v -e "sda" -e "sdb" | grep  "sd.[0-9]" | sed 's/`-//g' | awk 'OFS=" "  {print $1,$2}' )
+drives=$(lsblk -n -i -o name,size,mountpoint | grep -v -e "sda" -e "sdb" | grep  "sd.[0-9]" | sed 's/`-//g;s/|-//g' | awk ' $3 == "" {print $1" : " $2}' )
 
-if [ -n "$drive_name" ]; then
-	mount=$(printf  "$drive_name" | dmenu -i -p "Select to mount: ")
-    mount=$(echo $mount | awk  '{printf $1}') 
-    if [ -n "$(lsblk -i -n | grep $mount | awk '{print $7}')" ] ; then
-            notify-send "$mount already mounted"
-        else
-            udisksctl mount -b "/dev/$mount" && notify-send "/dev/$mount mounted" "/run/media/tony"
-        fi
-    else
-    notify-send "Nothing to mount"
+if [ -z "$drives" ]; then
+   notify-send  "Nothing To Mount"
+else
+	mount="$(printf "$drives" | dmenu -i -p "Select To mount: " | awk '{print $1}')"
+	udisksctl mount -b "/dev/$mount" && notify-send "$mount Mounted" "/run/media/tony" || notify-send -u critical "Can't Mount $mount"
 fi
-

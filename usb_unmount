@@ -1,24 +1,10 @@
-#!/bin/bash
+#!/bin/sh
 
-lists=""
-drives=$(lsblk -n -i -o name | grep -v -e "sda" -e "sdb" | grep  "sd.[0-9]" | sed 's/`-//g;s/\n/;/g' )
+drives=$(lsblk -n -i -o name,size,mountpoint | grep -v -e "sda" -e "sdb" | grep  "sd.[0-9]" | sed 's/`-//g;s/|-//g' | awk '$3 != "" {print $1 " : " $2}' )
 
-for i in $drives; do
-	[ -n "$(lsblk | grep $i | awk '{print $7}')" ] && lists+="$i" && lists+="\n"
-done
-
-# if [ "$lists" = "" ]  
-# then
-# 	notify-send "Nothing to unmount"
-# else
-# 	mount="$(lsblk -n -i -o name,size,mountpoint | grep $lists | dmenu -i -p "Choose to unmount: ")"
-# 	udisksctl unmount -b "/dev/$mount" && notify-send "$mount unmounted"
-# fi
-
- if [ "$lists" = "" ]  
-then
-	notify-send "Nothing to unmount"
+if [ -z "$drives" ]; then
+   notify-send "Nothing To Unmount"
 else
-	mount="$(echo -e $lists | dmenu -i -p "Choose to unmount: ")"
-	udisksctl unmount -b "/dev/$mount" && notify-send "$mount unmounted"
+	mount="$(printf "$drives" | dmenu -i -p "Select To Unmount: " | awk '{print $1}')"
+	udisksctl unmount -b "/dev/$mount" && notify-send "$mount Unmounted" || notify-send -u critical "Can't Unmount $mount"
 fi
