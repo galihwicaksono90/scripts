@@ -1,0 +1,26 @@
+#!/bin/bash
+
+IFS="\n"
+timer="10s
+1m
+5m
+10m
+30m
+1h
+"
+count=10
+
+time="$(printf $timer | dmenu -l 6 -c -p "Alarm Time: ")"
+message="$(dmenu -l 6 -c -p "Message: ")"
+
+notify-send "Alarm" "Set for $time" && sleep $time
+
+while [ $count -gt 0 ]
+do 
+	notify-send "$message ($count)"
+	sleep 1s
+	let $((count--))
+done
+
+st -c "gotop" -e filget "Time's Up!"
+

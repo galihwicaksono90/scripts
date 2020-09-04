@@ -1,0 +1,5 @@
+#!/bin/bash
+
+separator="---------------------------------------"
+
+notify-send "Dunst-test" "<i>$separator\\n$(date)\\n$(mpc current)</i>" 
