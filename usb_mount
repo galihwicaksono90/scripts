@@ -1,7 +1,8 @@
-#!/bin/sh
+#!/bin/bash
 
 drives=$(lsblk -n -i -o name,size,mountpoint | grep -v -e "sda" -e "sdb" | grep  "sd.[0-9]" | sed 's/`-//g;s/|-//g' | awk ' $3 == "" {print $1" : " $2}' )
 
+echo $drives
 if [ -z "$drives" ]; then
    notify-send  "Nothing To Mount"
 else
