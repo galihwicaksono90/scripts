@@ -1,7 +1,7 @@
 #!/bin/bash
 
 IFS="/n"
-main_monitor="LVDS1"
+main_monitor="LVDS-1"
 
 connected="$(xrandr --verbose | grep " connected" | grep -v -e VGA-1-2 -e $main_monitor | awk '{print $1}' )"
 

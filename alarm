@@ -17,7 +17,7 @@ notify-send "Alarm" "Set for $time" && sleep $time
 
 while [ $count -gt 0 ]
 do 
-	notify-send "$message ($count)"
+	dunstify -r  "313" "$message ($count)"
 	sleep 1s
 	let $((count--))
 done
