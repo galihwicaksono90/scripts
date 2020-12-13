@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# IFS="\n"
+file="$HOME/.config/Xresources"
+dir=$HOME/.config/themes
+theme=$(ls $dir | tr " " "\n" | dmenu -l 6 -c -p "Choose Theme: ")
+
+# if [ -n $theme ]
+# then
+#     sed -i 1d $file
+#     echo "#include \"/home/tony/.config/themes/$theme\"" | cat - $file > temp.txt && mv temp.txt $file 
+# fi
+
+if [ -n $theme ] 
+then
+    notify-send "asdf"
+    sed -i 1d $file && 
+    echo "#include \"/home/tony/.config/themes/$theme\"" | cat - $file > temp.txt && 
+    mv temp.txt $file && 
+    xrdb "$file" &&
+    restart_dwm & disown &&
+    notify-send -u low "Changed Theme" "$theme" 
+else
+    notify-send "Cancelled"
+fi
