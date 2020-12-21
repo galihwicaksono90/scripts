@@ -1,0 +1,5 @@
+#!/bin/bash
+
+theme=$1
+cmd="emacsclient -e '(counsel-load-theme-action \"doom-$theme\")'>/dev/null 2>&1"
+eval $cmd
