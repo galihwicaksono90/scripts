@@ -1,6 +1,6 @@
 #!/bin/bash
 
-file="$HOME/.config/Xresources"
+file="$HOME/.config/XResources"
 dir=$HOME/.config/themes
 if theme=$(ls $dir | tr " " "\n" | dmenu -l 10 -c -p "Choose Theme: "); then
     sed -i 1d $file && 
@@ -8,7 +8,7 @@ if theme=$(ls $dir | tr " " "\n" | dmenu -l 10 -c -p "Choose Theme: "); then
     mv temp.txt $file && 
     xrdb "$file" &&
     killall dwm &&
-    launch_dunst && 
-    doom-change-theme $theme && 
-    notify-send -u low "Switched Theme To" "$theme" 
+    doom-change-theme $theme &&
+    launch_dunst &&
+    notify-send -u normal "Switched Theme To" "$theme" 
 fi
