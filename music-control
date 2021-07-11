@@ -15,5 +15,3 @@ case $1 in
     "stop")
         mpc stop && dunstify -i low -a "prevSong" -r "99" "Music Stopped" 
 esac
-
-

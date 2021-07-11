@@ -1,6 +1,6 @@
 #!/bin/bash
 
-img_dir=$HOME/Storage/Pictures/Screenshots/
+img_dir=$HOME/Pictures/Screenshots/
 
 case $1 in
     1) maim "$img_dir/d_$(date '+%Y%m%d-%H:%M:%S').png" &&
@@ -9,4 +9,7 @@ case $1 in
 	   notify-send -u normal "Window screenshot taken." "$img_dir" ;;
     3) maim -s "$img_dir/s_$(date '+%Y%m%d-%H%M%S').png" ; notify-send 
 	   notify-send -u normal "Selected screenshot taken." "$img_dir" ;;
+    4) maim -s "$img_dir/x_$(date '+%Y%m%d-%H%M%S').png" ; notify-send 
+	   notify-send -u normal "Delayed screenshot taken." "$img_dir" ;;
 esac
+

@@ -4,8 +4,8 @@ drives=$(lsblk -n -i -o name,size,mountpoint | grep -v -e "sda" -e "sdb" | grep 
 
 echo $drives
 if [ -z "$drives" ]; then
-   notify-send  "Nothing To Mount"
+   dunstify -u low -r "444"  "Disk Mount" "Nothing To Mount"
 else
 	mount="$(printf "$drives" | dmenu -i -p "Select To mount: " | awk '{print $1}')"
-	udisksctl mount -b "/dev/$mount" && notify-send "$mount Mounted" "/run/media/tony" || notify-send -u critical "Can't Mount $mount"
+	udisksctl mount -b "/dev/$mount" && dunstify -u normal -a "mount" -r "444" "Disk Mount" "$mount Mounted" || dunstify -u critical -r "444" "Disk Mount" "Can't Mount $mount"
 fi

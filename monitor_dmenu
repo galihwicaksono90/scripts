@@ -1,7 +1,7 @@
 #!/bin/bash
 
 IFS="/n"
-main_monitor="LVDS-1"
+main_monitor="eDP-1"
 
 if connected="$(xrandr --verbose | grep " connected" | grep -v -e VGA-1-2 -e $main_monitor | awk '{print $1}' )"; then
 	if [ -n "$connected" ]; then

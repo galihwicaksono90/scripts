@@ -10,7 +10,7 @@ else
         echo "There is no react app named $gatsby!"
     else
         cd "$HOME/Documents/gatsby/$gatsby"
-        gatsby clean && gatsby develop
+        gatsby develop
     fi
 # npm start
 fi
